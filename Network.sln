@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33516.290
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Network", "Network\Network.vcxproj", "{6E0919CE-0FA4-4A9C-9A1A-53A9FB9EC05B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6E0919CE-0FA4-4A9C-9A1A-53A9FB9EC05B}.Debug|x64.ActiveCfg = Debug|x64
+		{6E0919CE-0FA4-4A9C-9A1A-53A9FB9EC05B}.Debug|x64.Build.0 = Debug|x64
+		{6E0919CE-0FA4-4A9C-9A1A-53A9FB9EC05B}.Debug|x86.ActiveCfg = Debug|Win32
+		{6E0919CE-0FA4-4A9C-9A1A-53A9FB9EC05B}.Debug|x86.Build.0 = Debug|Win32
+		{6E0919CE-0FA4-4A9C-9A1A-53A9FB9EC05B}.Release|x64.ActiveCfg = Release|x64
+		{6E0919CE-0FA4-4A9C-9A1A-53A9FB9EC05B}.Release|x64.Build.0 = Release|x64
+		{6E0919CE-0FA4-4A9C-9A1A-53A9FB9EC05B}.Release|x86.ActiveCfg = Release|Win32
+		{6E0919CE-0FA4-4A9C-9A1A-53A9FB9EC05B}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B30E4FF0-B596-4D19-9578-B7F0CF1380D6}
+	EndGlobalSection
+EndGlobal
