@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <fcntl.h>
-//#include <unistd.h>
+#include <unistd.h>
 #define BUF_SIZE 100
 
 int main(int argc, char* argv[]) {
 	int src, dst;  // source and destination
-	int read_cnt=0;  // the number of bytes 
+	int read_cnt;  // the number of bytes 
 	char buf[BUF_SIZE];
 
 	/* file open for read-only: O_RDONLY */
