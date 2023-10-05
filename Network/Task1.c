@@ -20,10 +20,12 @@ int main(int argc, char* argv[]) {
 	}
 
 	/* read data from the source and write the data to the destination*/
-	if (write(dst, buf, read_cnt == -1))
-		error_handling("write() error!");
+
+	if (write(dst, buf, sizeof(buf)))
+		printf("write() error!");
 
 	close(src);
 	close(dst);
 	return 0;
+
 }
