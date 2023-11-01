@@ -76,7 +76,6 @@ int main(int argc, char* argv[]) {
 	} // end of while
 }
 
-
 int tcp_connect(int af, char* servip, unsigned short port) {
 	struct sockaddr_in servaddr;
 	int  s; 	// 家南 积己
