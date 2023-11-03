@@ -2,6 +2,7 @@ import java.util.*; //scanner
 import java.io.*; //DataOutputStream
 import java.net.*; //Socket
 
+
 public class Client {
     public static void main(String args[]) {
         if (args.length != 3) {
