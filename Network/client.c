@@ -8,7 +8,7 @@ public class Client {
         if (args.length != 3) {
             System.out.println("./Client IP Port name");
             System.exit(0);
-        }
+        } 
         String Ip = args[0];
         int Port = Integer.parseInt(args[1]);
         String name = args[2];
