@@ -1,14 +1,16 @@
 import java.util.*; //scanner
 import java.io.*; //DataOutputStream
 import java.net.*; //Socket
-
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter; //time
 
 public class Client {
     public static void main(String args[]) {
         if (args.length != 3) {
             System.out.println("./Client IP Port name");
             System.exit(0);
-        } 
+        }
+
         String Ip = args[0];
         int Port = Integer.parseInt(args[1]);
         String name = args[2];
@@ -17,7 +19,7 @@ public class Client {
             Socket socket = new Socket(Ip, Port);
 
             System.out.println("Server connect");
-            // Thread Sender = new Thread(new Sender(socket,name)); 보내기+스레드 함수
+            Thread Sender = new Thread(new Sender(socket, name)); //send thread
         }
         catch (ConnectException e1) {
             e1.printStackTrace();
@@ -26,9 +28,7 @@ public class Client {
 
     } // main
 
-
-    //작성중
-    class Sender extends Thread { //static?
+    static class Sender extends Thread {
         Socket socket;
         DataOutputStream out;
         String name;
@@ -40,8 +40,29 @@ public class Client {
                 this.name = name;
             }
             catch (Exception e) {}
+        }
+        public void run() {
+            Scanner sc = new Scanner(System.in);
+            String message = "";
+            try {
+                if (out != null) {
+                    out.writeUTF(name + "connect");
+                }
 
-            //이제 run()으로 보내기 해야함
+                if ("eixt".equals(message)) {
+                    System.out.println("exit chating");
+                    System.exit(0);
+                }
+                else if (".help".equals(message)) { //mmmmmmmmmmmmmmmmmmmmmmmmmmm
+                    System.out.println("exit : ");
+                }
+                else {
+                    out.writeUTF(time "[" + "]"); //plus time
+                }
+
+            }
+            catch (IOException e) {}
+            sc.close();
 
         } //생성자
     } //sender class
