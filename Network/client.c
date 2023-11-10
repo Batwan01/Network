@@ -48,7 +48,6 @@ public class Client {
                 if (out != null) {
                     out.writeUTF(name + "connect");
                 }
-
                 if ("eixt".equals(message)) {
                     System.out.println("exit chating");
                     System.exit(0);
