@@ -122,7 +122,7 @@ class ClientHandler implements Runnable {
     } // run
 } // ClientHandler
  
-class ClientInfo{
+class ClientInf o{
     private PrintWriter Out; 
     private String name;
     private Socket clientSocket;
