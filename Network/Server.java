@@ -121,8 +121,8 @@ class ClientHandler implements Runnable {
         }
     } // run
 } // ClientHandler
- 
-class ClientInf o{
+  
+class ClientInfo{
     private PrintWriter Out; 
     private String name;
     private Socket clientSocket;
