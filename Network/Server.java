@@ -17,7 +17,7 @@ public class Serverf {
             ServerSocket serverSocket = new ServerSocket(portNumber); // 서버 소켓 생성
             System.out.println("서버가 시작되었습니다. 포트 번호: " + portNumber); // 출력
 
-            
+             
 
             while (true) { // 무한반복
                 /*listen 함수 호출 accept 함수 호출  */
