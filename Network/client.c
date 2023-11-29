@@ -7,11 +7,11 @@ import java.util.Scanner;
 public class Client {
 
     private static Socket socket;
-    private static Sender sender;
-    private static Receiver receiver;
+    private static Thread Sender;
+    private static Thread Receiver;
     private static String Ip;
     private static String name;
-    s
+
     public static void main(String args[]) {
         if (args.length != 3) {
             System.out.println("./Client IP Port name");
@@ -23,11 +23,11 @@ public class Client {
         name = args[2];
 
         try {
-            Socket socket = new Socket(Ip, Port);
+            socket = new Socket(Ip, Port);
 
             System.out.println("Server connect");
-            Thread Sender = new Thread(new Sender(socket, name)); //send thread
-            Thread Receiver = new Thread(new Receiver(socket));
+            Sender = new Thread(new Sender(socket, name)); //send thread
+            Receiver = new Thread(new Receiver(socket));
 
             Sender.start();
             Receiver.start();
@@ -44,6 +44,7 @@ public class Client {
         Socket socket;
         PrintWriter out;
         String name;
+        Scanner sc = new Scanner(System.in);
 
         Sender(Socket socket, String name) {
             this.socket = socket;
@@ -55,7 +56,6 @@ public class Client {
         } //생성자
 
         public void run() {
-            Scanner sc = new Scanner(System.in);
             String message = "";
             String check;
             try {
@@ -64,7 +64,12 @@ public class Client {
                     out.println(name + "이름으로 연결되었습니다.");
                 }
                 while (out != null) {
+
                     message = sc.nextLine();
+                    if ("/server list".equalsIgnoreCase(message)) {
+                        out.println(message); // 서버에 명령어 전송
+                        continue; // 다음 입력을 기다림
+                    }
                     if ("exit".equals(message)) {
                         sc.close();
                         socket.close();
@@ -77,6 +82,7 @@ public class Client {
                         System.out.println("/w name message : 귓속말");
                         System.out.println("/server create name : 채팅방 만들기");
                         System.out.println("/server join name : 채팅방 들어가기");
+                        System.out.println("/sever list : 채팅방 리스트보기");
                     }
                     else if (message.startsWith("/w")) {
                         check = message;
@@ -103,14 +109,10 @@ public class Client {
                         }
                         if (spaceCount >= 2) {
                             out.println(message);
-
                         }
                         else {
                             System.out.println("잘못된 명령어 입니다.\n /server (create or join) name");
                         }
-                    }
-                    else if (message.startsWith("#PORT")) {
-                        out.println(message);
                     }
                     else {
                         out.println(times.Gettime() + "[" + name + "] : " + message); //plus time
@@ -119,6 +121,20 @@ public class Client {
             }
             catch (IOException e) {}
         } //run
+
+        public void close() {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+                if (socket != null) {
+                    socket.close();
+                }
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         public void updateSocket(Socket newSocket) {
             this.socket = newSocket;
@@ -130,7 +146,7 @@ public class Client {
             }
         }//update
 
-    } //sender class
+    } //Sender class
 
     static class Receiver extends Thread { //받는 함수
         int Portnum;
@@ -138,6 +154,7 @@ public class Client {
         BufferedReader in;
         String[] command;
         String message;
+        String check;
         Receiver(Socket socket) {
             this.socket = socket;
             try {
@@ -150,8 +167,10 @@ public class Client {
             while (in != null) {
                 try {
                     message = in.readLine();
+                    if (message == null) {
+                        continue;
+                    }
                     if (message.startsWith("#PORT")) {
-                        System.out.println("asdasdasdasd");
                         command = message.split(" ", 2);
                         JoinServer(command[1]);
                     }
@@ -162,6 +181,19 @@ public class Client {
             }
         } //run
 
+        public void close() {
+            try {
+                if (in != null) {
+                    in.close();
+                }
+                if (socket != null) {
+                    socket.close();
+                }
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         public void updateSocket(Socket newSocket) {
             this.socket = newSocket;
@@ -185,28 +217,37 @@ public class Client {
 
     public static void JoinServer(String newPort) {
         try {
-            if (socket != null) {
-                socket.close();
-            }
+            closeall();
 
             socket = new Socket(Ip, Integer.parseInt(newPort));
+            Sender = new Sender(socket, name);   // 새 스레드 생성 및 시작
+            Receiver = new Receiver(socket);
 
-            if (sender != null) {
-                sender.interrupt(); // 안전하게 스레드 정지
-            }
-            if (receiver != null) {
-                receiver.interrupt(); // 안전하게 스레드 정지
-            }
-
-            sender = new Sender(socket, name);   // 새 스레드 생성 및 시작
-            receiver = new Receiver(socket);
-            new Thread(sender).start();
-            new Thread(receiver).start();
+            new Thread(Sender).start();
+            new Thread(Receiver).start();
 
         }
         catch (IOException e) {
             e.printStackTrace();
         }
+        catch (InterruptedException e) {
+        }
     }//joinserver
+
+    private static void closeall() throws InterruptedException, IOException{
+      if (Sender != null) {
+          Sender.interrupt();
+          Sender.join();
+          Sender = null;
+      }
+      if (Receiver != null) {
+          Receiver.interrupt();
+          Receiver.join();
+          Receiver = null;
+      }
+      if (socket != null && !socket.isClosed()) {
+          socket.close();
+      }
+    } //close all
 
 } //main class
