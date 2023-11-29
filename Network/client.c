@@ -11,7 +11,7 @@ public class Client {
     private static Receiver receiver;
     private static String Ip;
     private static String name;
-
+    s
     public static void main(String args[]) {
         if (args.length != 3) {
             System.out.println("./Client IP Port name");
